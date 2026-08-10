@@ -9,8 +9,8 @@
 class LufsCalculator
 {
 public:
-    LufsCalculator();
-    ~LufsCalculator();
+    LufsCalculator() = default;
+    ~LufsCalculator() = default;
 
     void prepare(double sampleRate, int numChannels);
     void processBlock(float* const* channelData, int numChannels, int numSamples);

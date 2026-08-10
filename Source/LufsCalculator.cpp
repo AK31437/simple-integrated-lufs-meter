@@ -52,10 +52,6 @@ int LufsCalculator::iround(double d)
     return (d > 0.0) ? static_cast<int>(d + 0.5) : static_cast<int>(d - 0.5);
 }
 
-LufsCalculator::LufsCalculator() {}
-
-LufsCalculator::~LufsCalculator() {}
-
 void LufsCalculator::prepare(double sampleRate, int numChannels)
 {
     sampleRate_ = sampleRate;
