@@ -1,6 +1,8 @@
 # Simple Integrated LUFS Meter
 
-![Simple Integrated LUFS Meter](screenshots/screenshot.png)
+<div align="center">
+    <img src="sreenshots/screenshot.png"</img> 
+</div>
 
 A minimal VST3 plugin that measures integrated loudness according to [ITU-R BS.1770-4](https://www.itu.int/rec/R-REC-BS.1770-4-201510-I) / [EBU R 128](https://tech.ebu.ch/docs/r/r128.pdf). Entirely vibe coded.
 
