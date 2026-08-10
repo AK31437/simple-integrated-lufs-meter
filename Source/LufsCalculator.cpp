@@ -84,13 +84,6 @@ void LufsCalculator::prepare(double sampleRate, int numChannels)
 
     binSums_.assign(static_cast<size_t>(numChannels), std::vector<double>(static_cast<size_t>(numBins_), 0.0));
 
-    weights_.assign(static_cast<size_t>(numChannels), 1.0);
-    if (numChannels >= 5)
-    {
-        weights_[3] = 1.41;
-        weights_[4] = 1.41;
-    }
-
     reset();
 }
 
@@ -149,7 +142,7 @@ void LufsCalculator::processBlock(float* const* channelData, int numChannels, in
                 for (int b = 0; b < numBins_; ++b)
                     meanSquare += binSums_[static_cast<size_t>(ch)][static_cast<size_t>(b)];
                 meanSquare /= static_cast<double>(numBins_ * binSize_);
-                weightedSum += weights_[static_cast<size_t>(ch)] * meanSquare;
+                weightedSum += meanSquare;
             }
 
             if (weightedSum > 0.0)

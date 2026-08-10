@@ -9,7 +9,7 @@ A minimal VST3 plugin that measures integrated loudness according to [ITU-R BS.1
 - Manual reset button
 - Audio passes through unmodified (pure measurement, no signal coloring)
 - Works at any sample rate (filter coefficients adapt via bilinear transform)
-- Stereo by default, 5.1 channel weights supported
+- Stereo by default
 
 ## Building
 
@@ -123,7 +123,7 @@ The plugin implements the full ITU-R BS.1770-4 integrated loudness algorithm:
 
 1. **K-weighting** — two cascaded biquad filters (pre-filter for head-related acoustic effects + revised low-frequency B-curve high-pass)
 2. **Mean square** — per-channel energy accumulation in 100ms bins
-3. **Channel weighting** — stereo: L=1.0, R=1.0 (surround channels weighted +1.5 dB per spec)
+3. **Channel weighting.** Stereo L and R at 1.0.
 4. **Gating** — 400ms blocks with 75% overlap; absolute gate at -70 LUFS, then relative gate at -10 dB below the absolute-gated average
 5. **Histogram** — block loudnesses are binned at 0.1 LU resolution for the final gated average
 

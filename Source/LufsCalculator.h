@@ -41,7 +41,6 @@ private:
     int currentBin_ = 0;
     int samplesInCurrentBin_ = 0;
     std::vector<std::vector<double>> binSums_;
-    std::vector<double> weights_;
 
     int absoluteBlockCount_ = 0;
     double absoluteWeightedSum_ = 0.0;
