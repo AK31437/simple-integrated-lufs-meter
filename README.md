@@ -13,35 +13,109 @@ A minimal VST3 plugin that measures integrated loudness according to [ITU-R BS.1
 
 ## Building
 
-### Requirements
-
-- CMake 3.22+
-- C++17 compiler (GCC, Clang, MSVC)
-- Linux: ALSA, freetype2, X11 development headers (for JUCE)
-
 JUCE is fetched automatically via CMake FetchContent — no manual setup needed.
 
-### Build
+### Quick reference
+
+| Platform | Configure | Build |
+|----------|-----------|-------|
+| Linux / macOS | `cmake -B build -DCMAKE_BUILD_TYPE=Release` | `cmake --build build` |
+| Windows | `cmake -B build` | `cmake --build build --config Release` |
+
+### Linux
+
+<details><summary><b>Requirements</b></summary>
+
+- CMake 3.22+
+- C++17 compiler (GCC or Clang)
+- JUCE system libraries: ALSA, freetype2, X11 (X11, Xrandr, Xinerama, Xcursor) development headers
+
+Install them with:
+
+```bash
+# Debian / Ubuntu
+sudo apt install build-essential cmake libasound2-dev libfreetype-dev libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev
+
+# Arch Linux
+sudo pacman -S --needed base-devel cmake alsa-lib freetype2 libx11 libxrandr libxinerama libxcursor
+
+# Fedora
+sudo dnf install gcc-c++ cmake alsa-lib-devel freetype-devel libX11-devel libXrandr-devel libXinerama-devel libXcursor-devel
+```
+
+</details>
+
+<details><summary><b>Build and install</b></summary>
 
 ```bash
 cmake -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build -j$(nproc)
 ```
 
-### Install
+The plugin bundle is built at `build/LUFSMeter_artefacts/Release/VST3/Simple Integrated LUFS Meter.vst3`.
 
-Copy the built `.vst3` bundle to your DAW's plugin path:
+Install it to your DAW's plugin path:
 
 ```bash
-# Linux
-cp -r build/LUFSMeter_artefacts/Release/VST3/Simple\ Integrated\ LUFS\ Meter.vst3 ~/.vst3/
-
-# macOS
-cp -r build/LUFSMeter_artefacts/Release/VST3/Simple\ Integrated\ LUFS\ Meter.vst3 ~/Library/Audio/Plug-Ins/VST3/
-
-# Windows (PowerShell)
-Copy-Item -Recurse build\LUFSMeter_artefacts\Release\VST3\Simple\ Integrated\ LUFS\ Meter.vst3 $env:PROGRAMFILES\Common Files\VST3\
+cp -r "build/LUFSMeter_artefacts/Release/VST3/Simple Integrated LUFS Meter.vst3" ~/.vst3/
 ```
+
+</details>
+
+### macOS
+
+<details><summary><b>Requirements</b></summary>
+
+- [Xcode Command Line Tools](https://developer.apple.com/xcode/): `xcode-select --install` (provides Clang, C++17)
+- CMake 3.22+ — e.g. via [Homebrew](https://brew.sh/): `brew install cmake`
+
+</details>
+
+<details><summary><b>Build and install</b></summary>
+
+macOS has no `nproc`, so use `sysctl` to parallelize:
+
+```bash
+cmake -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build -j$(sysctl -n hw.ncpu)
+```
+
+The plugin bundle is built at `build/LUFSMeter_artefacts/Release/VST3/Simple Integrated LUFS Meter.vst3`.
+
+Install it to your DAW's plugin path:
+
+```bash
+cp -r "build/LUFSMeter_artefacts/Release/VST3/Simple Integrated LUFS Meter.vst3" ~/Library/Audio/Plug-Ins/VST3/
+```
+
+</details>
+
+### Windows
+
+<details><summary><b>Requirements</b></summary>
+
+- [Visual Studio 2022](https://visualstudio.microsoft.com/) with the **"Desktop development with C++"** workload. This bundles the MSVC compiler and CMake, so nothing else is needed.
+
+</details>
+
+<details><summary><b>Build and install</b></summary>
+
+Windows uses the multi-config Visual Studio generator, so there is no `CMAKE_BUILD_TYPE` — the configuration is passed to the build step instead:
+
+```powershell
+cmake -B build
+cmake --build build --config Release
+```
+
+The plugin bundle is built at `build\LUFSMeter_artefacts\VST3\Release\Simple Integrated LUFS Meter.vst3`.
+
+Install it to your DAW's plugin path:
+
+```powershell
+Copy-Item -Recurse "build\LUFSMeter_artefacts\VST3\Release\Simple Integrated LUFS Meter.vst3" "$env:PROGRAMFILES\Common Files\VST3\"
+```
+
+</details>
 
 ## How It Works
 
