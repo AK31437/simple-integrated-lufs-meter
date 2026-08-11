@@ -17,7 +17,7 @@ A minimal VST3 plugin that measures integrated loudness according to [ITU-R BS.1
 
 ## Building
 
-JUCE is fetched automatically via CMake FetchContent — no manual setup needed.
+JUCE is fetched automatically via CMake FetchContent — no manual setup needed. Check out the [releases](https://github.com/AK31437/simple-integrated-lufs-meter/releases) for pre-built versions.
 
 ### Quick reference
 
